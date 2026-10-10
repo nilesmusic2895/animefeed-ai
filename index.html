@@ -264,6 +264,8 @@ console.log("BBC news response:", response.status);
     if (!items.length) {
       throw new Error("No stories were found in this feed.");
     }
+    let generatedCount = 0;
+const MAX_GENERATED_IMAGES = 5;
     
     for (const item of items) {
       const title =
@@ -312,7 +314,23 @@ const imageUrl =
   "";
 
       const card = document.createElement("article");
-      card.className = "story";
+card.className = "story";
+
+const animeContainer = document.createElement("div");
+animeContainer.className = "anime-result";
+animeContainer.style.marginTop = "15px";
+
+const animeStatus = document.createElement("p");
+animeStatus.className = "note";
+animeStatus.textContent = "🎨 Anime artwork will appear here.";
+
+const animeImage = document.createElement("img");
+animeImage.alt = "AI-generated anime illustration";
+animeImage.hidden = true;
+animeImage.loading = "lazy";
+
+animeContainer.appendChild(animeStatus);
+animeContainer.appendChild(animeImage);
 
       if (imageUrl) {
         try {
