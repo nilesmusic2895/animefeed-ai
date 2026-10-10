@@ -1,0 +1,287 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171225">
+
+  <title>AnimeFeed AI</title>
+
+  <style>
+    :root {
+      --bg: #171225;
+      --card: #241c35;
+      --pink: #ff83c5;
+      --purple: #b7a0ff;
+      --text: #fff8ff;
+      --muted: #c6bdd3;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, sans-serif;
+    }
+
+    header {
+      padding: 24px 18px;
+      text-align: center;
+      background: linear-gradient(135deg, #37214e, #171225);
+      border-bottom: 1px solid #49345c;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 30px;
+    }
+
+    h1 span {
+      color: var(--pink);
+    }
+
+    header p {
+      color: var(--muted);
+    }
+
+    main {
+      width: min(100% - 28px, 650px);
+      margin: 24px auto;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid #453452;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 19px;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    input, select, button {
+      width: 100%;
+      min-height: 48px;
+      border-radius: 11px;
+      padding: 12px;
+      font: inherit;
+    }
+
+    input, select {
+      background: #171225;
+      color: white;
+      border: 1px solid #59446d;
+    }
+
+    button {
+      margin-top: 14px;
+      background: var(--pink);
+      color: #29152a;
+      border: 0;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.99);
+    }
+
+    .secondary {
+      background: #392a4d;
+      color: white;
+      border: 1px solid #59446d;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    #status {
+      color: var(--purple);
+      overflow-wrap: anywhere;
+    }
+
+    footer {
+      padding: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>🎌 Anime<span>Feed</span> AI</h1>
+    <p>Your world. Your news. Your anime aesthetic.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>🎨 Your anime universe</h2>
+
+      <label for="style">Choose your AI art style</label>
+
+      <select id="style">
+        <option value="smart">✨ Smart AI — choose per story</option>
+        <option value="cinematic">⚡ Cinematic anime</option>
+        <option value="dreamy">🌸 Dreamy and pastel</option>
+        <option value="dark">🌙 Dark fantasy anime</option>
+        <option value="watercolor">🌿 Watercolor anime</option>
+        <option value="retro">📼 Retro anime</option>
+      </select>
+
+      <label for="intensity">Picture transformation</label>
+
+      <select id="intensity">
+        <option value="subtle">Subtle anime makeover</option>
+        <option value="balanced">Balanced anime art</option>
+        <option value="full">Full anime illustration</option>
+      </select>
+
+      <button id="save">Save my preferences 💜</button>
+
+      <p class="note">
+        Your selections are saved in this browser on this device.
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2>📰 Choose your news source</h2>
+
+      <label for="newsUrl">News website or RSS feed URL</label>
+
+      <input
+        id="newsUrl"
+        type="url"
+        placeholder="https://example.com"
+        autocomplete="url"
+      >
+
+      <button id="openNews">Open news website</button>
+
+      <p class="note">
+        This starter version opens your chosen website.
+        Automatic article importing and AI image generation
+        will be added separately.
+      </p>
+
+      <p id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel">
+      <h2>🤖 How your AI will work</h2>
+
+      <p>
+        <strong>1.</strong> Find a news story.
+      </p>
+
+      <p>
+        <strong>2.</strong> Understand what its picture should show.
+      </p>
+
+      <p>
+        <strong>3.</strong> Generate an illustration in your chosen style.
+      </p>
+
+      <p>
+        <strong>4.</strong> Display the anime picture beside the original
+        headline and article link.
+      </p>
+
+      <p class="note">
+        These steps describe the planned system; they are not
+        automated in this starter version.
+      </p>
+    </section>
+
+    <button class="secondary" id="reset">
+      Reset preferences
+    </button>
+  </main>
+
+  <footer>
+    AnimeFeed AI · Made for anime lovers 💜
+  </footer>
+
+  <script>
+    const style = document.getElementById("style");
+    const intensity = document.getElementById("intensity");
+    const newsUrl = document.getElementById("newsUrl");
+    const status = document.getElementById("status");
+
+    function loadPreferences() {
+      try {
+        const saved = JSON.parse(
+          localStorage.getItem("animefeed-settings") || "{}"
+        );
+
+        if (saved.style) style.value = saved.style;
+        if (saved.intensity) intensity.value = saved.intensity;
+        if (saved.newsUrl) newsUrl.value = saved.newsUrl;
+      } catch {
+        status.textContent = "Could not load saved preferences.";
+      }
+    }
+
+    document.getElementById("save").addEventListener("click", () => {
+      const preferences = {
+        style: style.value,
+        intensity: intensity.value,
+        newsUrl: newsUrl.value.trim()
+      };
+
+      localStorage.setItem(
+        "animefeed-settings",
+        JSON.stringify(preferences)
+      );
+
+      status.textContent = "Your anime preferences have been saved! 💜";
+    });
+
+    document.getElementById("openNews").addEventListener("click", () => {
+      let url;
+
+      try {
+        url = new URL(newsUrl.value.trim());
+      } catch {
+        status.textContent = "Please enter a valid website URL.";
+        return;
+      }
+
+      if (!["https:", "http:"].includes(url.protocol)) {
+        status.textContent = "Please enter an HTTP or HTTPS URL.";
+        return;
+      }
+
+      window.open(url.href, "_blank", "noopener,noreferrer");
+    });
+
+    document.getElementById("reset").addEventListener("click", () => {
+      localStorage.removeItem("animefeed-settings");
+      style.value = "smart";
+      intensity.value = "balanced";
+      newsUrl.value = "";
+      status.textContent = "Preferences reset.";
+    });
+
+    loadPreferences();
+  </script>
+</body>
+</html>
