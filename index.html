@@ -278,7 +278,7 @@ console.log("BBC news response:", response.status);
         item.querySelector("summary") ||
         item.querySelector("content");
 
-      const description = descriptionNode?.textContent?.trim() || "";
+      const descriptionHTML = description || "";
 
       const enclosureImage =
   item.querySelector("enclosure[type^='image']")?.getAttribute("url");
@@ -297,10 +297,7 @@ const mediaThumbnail =
 const mediaContent = Array.from(mediaImages)
   .map(node => node.getAttribute("url"))
   .find(url => url && /^https?:\/\//i.test(url)) || "";
-
-const descriptionNode =
-  item.querySelector("description") ||
-  item.querySelector("summary");
+      
 
 const descriptionHTML = descriptionNode?.textContent || "";
 
