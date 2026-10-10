@@ -1,287 +1,350 @@
- <!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#171225">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#171225">
+<title>AnimeFeed AI</title>
 
-  <title>AnimeFeed AI</title>
+<style>
+:root {
+  --bg: #171225;
+  --card: #241c35;
+  --pink: #ff83c5;
+  --purple: #b7a0ff;
+  --text: #fff8ff;
+  --muted: #c6bdd3;
+}
 
-  <style>
-    :root {
-      --bg: #171225;
-      --card: #241c35;
-      --pink: #ff83c5;
-      --purple: #b7a0ff;
-      --text: #fff8ff;
-      --muted: #c6bdd3;
-    }
+* { box-sizing: border-box; }
 
-    * {
-      box-sizing: border-box;
-    }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
 
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: system-ui, sans-serif;
-    }
+header {
+  padding: 28px 16px;
+  text-align: center;
+  background: linear-gradient(135deg,#49265f,#171225);
+}
 
-    header {
-      padding: 24px 18px;
-      text-align: center;
-      background: linear-gradient(135deg, #37214e, #171225);
-      border-bottom: 1px solid #49345c;
-    }
+h1 { margin: 0; font-size: 32px; }
+h1 span { color: var(--pink); }
 
-    h1 {
-      margin: 0;
-      font-size: 30px;
-    }
+header p { color: var(--muted); }
 
-    h1 span {
-      color: var(--pink);
-    }
+main {
+  width: min(100% - 28px, 700px);
+  margin: 22px auto;
+}
 
-    header p {
-      color: var(--muted);
-    }
+.panel, .story {
+  background: var(--card);
+  border: 1px solid #493653;
+  border-radius: 17px;
+  padding: 18px;
+  margin-bottom: 17px;
+}
 
-    main {
-      width: min(100% - 28px, 650px);
-      margin: 24px auto;
-    }
+h2 { font-size: 19px; margin-top: 0; }
 
-    .panel {
-      background: var(--card);
-      border: 1px solid #453452;
-      border-radius: 18px;
-      padding: 20px;
-      margin-bottom: 18px;
-    }
+label {
+  display: block;
+  margin: 13px 0 7px;
+  color: var(--muted);
+}
 
-    h2 {
-      margin-top: 0;
-      font-size: 19px;
-    }
+input, select, button {
+  width: 100%;
+  min-height: 46px;
+  padding: 11px;
+  border-radius: 10px;
+  font: inherit;
+}
 
-    label {
-      display: block;
-      margin: 14px 0 8px;
-      color: var(--muted);
-      font-size: 14px;
-    }
+input, select {
+  background: var(--bg);
+  color: white;
+  border: 1px solid #59446d;
+}
 
-    input, select, button {
-      width: 100%;
-      min-height: 48px;
-      border-radius: 11px;
-      padding: 12px;
-      font: inherit;
-    }
+button {
+  margin-top: 12px;
+  background: var(--pink);
+  color: #29152a;
+  border: 0;
+  font-weight: 700;
+  cursor: pointer;
+}
 
-    input, select {
-      background: #171225;
-      color: white;
-      border: 1px solid #59446d;
-    }
+button.secondary {
+  background: #392a4d;
+  color: white;
+  border: 1px solid #59446d;
+}
 
-    button {
-      margin-top: 14px;
-      background: var(--pink);
-      color: #29152a;
-      border: 0;
-      font-weight: 700;
-      cursor: pointer;
-    }
+.note {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
 
-    button:active {
-      transform: scale(0.99);
-    }
+#status {
+  color: var(--purple);
+  overflow-wrap: anywhere;
+}
 
-    .secondary {
-      background: #392a4d;
-      color: white;
-      border: 1px solid #59446d;
-    }
+.story img {
+  display: block;
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
 
-    .note {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-    }
+.story h3 { margin: 8px 0; }
 
-    #status {
-      color: var(--purple);
-      overflow-wrap: anywhere;
-    }
+.story a {
+  color: var(--pink);
+  text-decoration: none;
+}
 
-    footer {
-      padding: 20px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
-    }
-  </style>
+footer {
+  padding: 20px;
+  text-align: center;
+  color: var(--muted);
+}
+</style>
 </head>
 
 <body>
-  <header>
-    <h1>🎌 Anime<span>Feed</span> AI</h1>
-    <p>Your world. Your news. Your anime aesthetic.</p>
-  </header>
+<header>
+  <h1>🎌 Anime<span>Feed</span> AI</h1>
+  <p>Your news. Your world. Your anime.</p>
+</header>
 
-  <main>
-    <section class="panel">
-      <h2>🎨 Your anime universe</h2>
+<main>
+  <section class="panel">
+    <h2>🎨 Your anime universe</h2>
 
-      <label for="style">Choose your AI art style</label>
+    <label for="style">Choose your anime style</label>
+    <select id="style">
+      <option value="smart">✨ Smart AI — choose per story</option>
+      <option value="cinematic">⚡ Cinematic anime</option>
+      <option value="dreamy">🌸 Dreamy pastel anime</option>
+      <option value="dark">🌙 Dark fantasy anime</option>
+      <option value="watercolor">🌿 Watercolor anime</option>
+      <option value="retro">📼 Retro anime</option>
+    </select>
 
-      <select id="style">
-        <option value="smart">✨ Smart AI — choose per story</option>
-        <option value="cinematic">⚡ Cinematic anime</option>
-        <option value="dreamy">🌸 Dreamy and pastel</option>
-        <option value="dark">🌙 Dark fantasy anime</option>
-        <option value="watercolor">🌿 Watercolor anime</option>
-        <option value="retro">📼 Retro anime</option>
-      </select>
+    <label for="strength">Art style strength</label>
+    <select id="strength">
+      <option value="subtle">Subtle</option>
+      <option value="balanced" selected>Balanced</option>
+      <option value="full">Full anime illustration</option>
+    </select>
 
-      <label for="intensity">Picture transformation</label>
+    <button id="save">💜 Save my preferences</button>
+  </section>
 
-      <select id="intensity">
-        <option value="subtle">Subtle anime makeover</option>
-        <option value="balanced">Balanced anime art</option>
-        <option value="full">Full anime illustration</option>
-      </select>
+  <section class="panel">
+    <h2>📰 Choose your news source</h2>
 
-      <button id="save">Save my preferences 💜</button>
+    <label for="feed">RSS news feed URL</label>
+    <input
+      id="feed"
+      type="url"
+      placeholder="Paste an RSS feed URL here"
+    >
 
-      <p class="note">
-        Your selections are saved in this browser on this device.
-      </p>
-    </section>
+    <button id="load">Load news stories ✨</button>
 
-    <section class="panel">
-      <h2>📰 Choose your news source</h2>
+    <p class="note">
+      Enter an RSS feed address, not just the news website's homepage.
+      The feed must allow browser access for this version to load it.
+    </p>
 
-      <label for="newsUrl">News website or RSS feed URL</label>
+    <p id="status" role="status" aria-live="polite"></p>
+  </section>
 
-      <input
-        id="newsUrl"
-        type="url"
-        placeholder="https://example.com"
-        autocomplete="url"
-      >
+  <section>
+    <h2>📰 Your personalized feed</h2>
+    <div id="stories"></div>
+  </section>
 
-      <button id="openNews">Open news website</button>
+  <section class="panel">
+    <h2>🤖 The AI we're building</h2>
+    <p>📰 Keep original headlines and article links.</p>
+    <p>🎨 Create anime illustrations that match each story.</p>
+    <p>✨ Let AI select a fitting style for each picture.</p>
+    <p class="note">
+      AI image generation is not connected yet. The next stage
+      will add a secure backend and image-generation service.
+    </p>
+  </section>
+</main>
 
-      <p class="note">
-        This starter version opens your chosen website.
-        Automatic article importing and AI image generation
-        will be added separately.
-      </p>
+<footer>AnimeFeed AI · Made with 💜</footer>
 
-      <p id="status" role="status" aria-live="polite"></p>
-    </section>
+<script>
+const $ = id => document.getElementById(id);
 
-    <section class="panel">
-      <h2>🤖 How your AI will work</h2>
+function saveSettings() {
+  localStorage.setItem("animefeed-settings", JSON.stringify({
+    style: $("style").value,
+    strength: $("strength").value,
+    feed: $("feed").value.trim()
+  }));
 
-      <p>
-        <strong>1.</strong> Find a news story.
-      </p>
+  $("status").textContent = "Preferences saved! 💜";
+}
 
-      <p>
-        <strong>2.</strong> Understand what its picture should show.
-      </p>
+function restoreSettings() {
+  try {
+    const settings = JSON.parse(
+      localStorage.getItem("animefeed-settings") || "{}"
+    );
 
-      <p>
-        <strong>3.</strong> Generate an illustration in your chosen style.
-      </p>
+    if (settings.style) $("style").value = settings.style;
+    if (settings.strength) $("strength").value = settings.strength;
+    if (settings.feed) $("feed").value = settings.feed;
+  } catch {}
+}
 
-      <p>
-        <strong>4.</strong> Display the anime picture beside the original
-        headline and article link.
-      </p>
+$("save").addEventListener("click", saveSettings);
 
-      <p class="note">
-        These steps describe the planned system; they are not
-        automated in this starter version.
-      </p>
-    </section>
+$("load").addEventListener("click", async () => {
+  let url;
 
-    <button class="secondary" id="reset">
-      Reset preferences
-    </button>
-  </main>
+  try {
+    url = new URL($("feed").value.trim());
 
-  <footer>
-    AnimeFeed AI · Made for anime lovers 💜
-  </footer>
+    if (!["https:", "http:"].includes(url.protocol)) {
+      throw new Error();
+    }
+  } catch {
+    $("status").textContent = "Please enter a valid RSS feed URL.";
+    return;
+  }
 
-  <script>
-    const style = document.getElementById("style");
-    const intensity = document.getElementById("intensity");
-    const newsUrl = document.getElementById("newsUrl");
-    const status = document.getElementById("status");
+  $("status").textContent = "Loading stories...";
+  $("stories").replaceChildren();
 
-    function loadPreferences() {
-      try {
-        const saved = JSON.parse(
-          localStorage.getItem("animefeed-settings") || "{}"
-        );
+  try {
+    const response = await fetch(url.href);
 
-        if (saved.style) style.value = saved.style;
-        if (saved.intensity) intensity.value = saved.intensity;
-        if (saved.newsUrl) newsUrl.value = saved.newsUrl;
-      } catch {
-        status.textContent = "Could not load saved preferences.";
-      }
+    if (!response.ok) {
+      throw new Error("The feed returned an error.");
     }
 
-    document.getElementById("save").addEventListener("click", () => {
-      const preferences = {
-        style: style.value,
-        intensity: intensity.value,
-        newsUrl: newsUrl.value.trim()
-      };
+    const xmlText = await response.text();
+    const xml = new DOMParser().parseFromString(
+      xmlText, "application/xml"
+    );
 
-      localStorage.setItem(
-        "animefeed-settings",
-        JSON.stringify(preferences)
-      );
+    if (xml.querySelector("parsererror")) {
+      throw new Error("This does not appear to be a valid RSS or Atom feed.");
+    }
 
-      status.textContent = "Your anime preferences have been saved! 💜";
-    });
+    const items = [
+      ...xml.querySelectorAll("item"),
+      ...xml.querySelectorAll("entry")
+    ].slice(0, 20);
 
-    document.getElementById("openNews").addEventListener("click", () => {
-      let url;
+    if (!items.length) {
+      throw new Error("No stories were found in this feed.");
+    }
+
+    for (const item of items) {
+      const title =
+        item.querySelector("title")?.textContent?.trim() ||
+        "Untitled story";
+
+      const linkNode = item.querySelector("link");
+      const link = linkNode?.textContent?.trim() ||
+        linkNode?.getAttribute("href") || "";
+
+      const descriptionNode = item.querySelector("description") ||
+        item.querySelector("summary") ||
+        item.querySelector("content");
+
+      const description = descriptionNode?.textContent?.trim() || "";
+
+      const imageUrl =
+        item.querySelector("enclosure[type^='image']")?.getAttribute("url") ||
+        item.getElementsByTagNameNS("*", "content")[0]?.getAttribute("url") ||
+        "";
+
+      const card = document.createElement("article");
+      card.className = "story";
+
+      if (imageUrl) {
+        try {
+          const image = new URL(imageUrl, url.href);
+
+          if (["https:", "http:"].includes(image.protocol)) {
+            const img = document.createElement("img");
+            img.src = image.href;
+            img.alt = title;
+            img.loading = "lazy";
+            img.referrerPolicy = "no-referrer";
+            img.onerror = () => img.remove();
+            card.appendChild(img);
+          }
+        } catch {}
+      }
+
+      const heading = document.createElement("h3");
+      heading.textContent = title;
+      card.appendChild(heading);
+
+      if (description) {
+        const summary = document.createElement("p");
+        summary.textContent = description.replace(/<[^>]*>/g, "").slice(0, 400);
+        card.appendChild(summary);
+      }
 
       try {
-        url = new URL(newsUrl.value.trim());
-      } catch {
-        status.textContent = "Please enter a valid website URL.";
-        return;
-      }
+        const articleUrl = new URL(link, url.href);
 
-      if (!["https:", "http:"].includes(url.protocol)) {
-        status.textContent = "Please enter an HTTP or HTTPS URL.";
-        return;
-      }
+        if (["https:", "http:"].includes(articleUrl.protocol)) {
+          const anchor = document.createElement("a");
+          anchor.href = articleUrl.href;
+          anchor.target = "_blank";
+          anchor.rel = "noopener noreferrer";
+          anchor.textContent = "Read original story ↗";
+          card.appendChild(anchor);
+        }
+      } catch {}
 
-      window.open(url.href, "_blank", "noopener,noreferrer");
-    });
+      $("stories").appendChild(card);
+    }
 
-    document.getElementById("reset").addEventListener("click", () => {
-      localStorage.removeItem("animefeed-settings");
-      style.value = "smart";
-      intensity.value = "balanced";
-      newsUrl.value = "";
-      status.textContent = "Preferences reset.";
-    });
+    $("status").textContent =
+      `Loaded ${items.length} stories. Anime image generation comes next!`;
+    saveFeedPreference();
+  } catch (error) {
+    $("status").textContent =
+      "Couldn't load this feed. It may block browser access (CORS). " +
+      "We'll add a secure feed backend to support more news sources.";
+  }
+});
 
-    loadPreferences();
-  </script>
+function saveFeedPreference() {
+  try {
+    const settings = JSON.parse(
+      localStorage.getItem("animefeed-settings") || "{}"
+    );
+    settings.feed = $("feed").value.trim();
+    localStorage.setItem("animefeed-settings", JSON.stringify(settings));
+  } catch {}
+}
+
+restoreSettings();
+</script>
 </body>
 </html>
