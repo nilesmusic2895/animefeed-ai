@@ -381,7 +381,7 @@ if (generatedCount < MAX_GENERATED_IMAGES) {
   animeStatus.textContent =
     `🎨 Generating anime artwork (${generatedCount}/${MAX_GENERATED_IMAGES})...`;
 
-  fetch("/api/anime", {
+  fetch("/anime", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
