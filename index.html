@@ -371,7 +371,57 @@ animeContainer.appendChild(animeImage);
         }
       } catch {}
 
-      $("stories").appendChild(card);
+      // Add the anime display area to the news card
+card.appendChild(animeContainer);
+
+// Automatically generate anime for up to five stories
+if (generatedCount < MAX_GENERATED_IMAGES) {
+  generatedCount++;
+
+  animeStatus.textContent =
+    `🎨 Generating anime artwork (${generatedCount}/${MAX_GENERATED_IMAGES})...`;
+
+  fetch("/api/anime", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      title: title,
+      style: $("style").value
+    })
+  })
+    .then(async response => {
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Anime generation failed.");
+      }
+
+      if (!data.image) {
+        throw new Error("No image was returned.");
+      }
+
+      return data;
+    })
+    .then(data => {
+      animeImage.src = data.image;
+      animeImage.hidden = false;
+      animeStatus.textContent = "✨ Anime artwork generated!";
+    })
+    .catch(error => {
+      console.error("Animify error:", error);
+      animeStatus.textContent =
+        "Anime generation failed. Please try again later.";
+    });
+
+} else {
+  animeStatus.textContent =
+    "💜 Prototype limit reached. More anime artwork coming soon!";
+}
+
+// Add the completed card to the feed
+$("stories").appendChild(card);
     }
 
     $("status").textContent =
