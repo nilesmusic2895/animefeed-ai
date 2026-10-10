@@ -264,7 +264,9 @@ console.log("BBC news response:", response.status);
     if (!items.length) {
       throw new Error("No stories were found in this feed.");
     }
-
+let generatedCount = 0;
+const MAX_GENERATED_IMAGES = 5;
+    
     for (const item of items) {
       const title =
         item.querySelector("title")?.textContent?.trim() ||
