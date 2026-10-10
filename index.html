@@ -274,11 +274,13 @@ console.log("BBC news response:", response.status);
       const link = linkNode?.textContent?.trim() ||
         linkNode?.getAttribute("href") || "";
 
-      const descriptionNode = item.querySelector("description") ||
-        item.querySelector("summary") ||
-        item.querySelector("content");
+      const descriptionNode =
+  item.querySelector("description") ||
+  item.querySelector("summary") ||
+  item.querySelector("content");
 
-      const descriptionHTML = description || "";
+const description = descriptionNode?.textContent?.trim() || "";
+const descriptionHTML = description;
 
       const enclosureImage =
   item.querySelector("enclosure[type^='image']")?.getAttribute("url");
@@ -298,8 +300,6 @@ const mediaContent = Array.from(mediaImages)
   .map(node => node.getAttribute("url"))
   .find(url => url && /^https?:\/\//i.test(url)) || "";
       
-
-const descriptionHTML = descriptionNode?.textContent || "";
 
 const embeddedImage =
   descriptionHTML.match(/<img[^>]+src=["']([^"']+)["']/i)?.[1] || "";
