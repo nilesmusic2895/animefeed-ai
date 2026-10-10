@@ -5,7 +5,7 @@ export async function onRequest() {
     const response = await fetch(feedUrl);
 
     if (!response.ok) {
-      return new Response("The news provider returned an error.", {
+      return new Response("Unable to retrieve BBC news.", {
         status: 502
       });
     }
@@ -15,11 +15,12 @@ export async function onRequest() {
     return new Response(xml, {
       headers: {
         "Content-Type": "application/xml; charset=utf-8",
-        "Cache-Control": "public, max-age=300"
+        "Cache-Control": "public, max-age=300",
+        "Access-Control-Allow-Origin": "*"
       }
     });
   } catch {
-    return new Response("Unable to retrieve the news feed.", {
+    return new Response("Unable to retrieve BBC news.", {
       status: 502
     });
   }
