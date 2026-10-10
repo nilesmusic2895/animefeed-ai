@@ -235,8 +235,7 @@ $("load").addEventListener("click", async () => {
   $("stories").replaceChildren();
 
   try {
-    const response = await fetch(url.href);
-
+    const response = await fetch("/api/news");
     if (!response.ok) {
       throw new Error("The feed returned an error.");
     }
