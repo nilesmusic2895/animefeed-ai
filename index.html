@@ -236,6 +236,11 @@ $("load").addEventListener("click", async () => {
 
   try {
     const response = await fetch("/api/news");
+
+    if (!response.ok) throw new Error("News request failed");
+console.log("BBC news response:", response.status);
+
+    
     if (!response.ok) {
       throw new Error("The feed returned an error.");
     }
