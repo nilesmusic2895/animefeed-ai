@@ -273,10 +273,39 @@ $("load").addEventListener("click", async () => {
 
       const description = descriptionNode?.textContent?.trim() || "";
 
-      const imageUrl =
-        item.querySelector("enclosure[type^='image']")?.getAttribute("url") ||
-        item.getElementsByTagNameNS("*", "content")[0]?.getAttribute("url") ||
-        "";
+      const enclosureImage =
+  item.querySelector("enclosure[type^='image']")?.getAttribute("url");
+
+const thumbnails =
+  item.getElementsByTagNameNS("*", "thumbnail");
+
+const mediaImages =
+  item.getElementsByTagNameNS("*", "content");
+
+const mediaThumbnail =
+  thumbnails.length > 0
+    ? thumbnails[0].getAttribute("url")
+    : "";
+
+const mediaContent = Array.from(mediaImages)
+  .map(node => node.getAttribute("url"))
+  .find(url => url && /^https?:\/\//i.test(url)) || "";
+
+const descriptionNode =
+  item.querySelector("description") ||
+  item.querySelector("summary");
+
+const descriptionHTML = descriptionNode?.textContent || "";
+
+const embeddedImage =
+  descriptionHTML.match(/<img[^>]+src=["']([^"']+)["']/i)?.[1] || "";
+
+const imageUrl =
+  enclosureImage ||
+  mediaThumbnail ||
+  mediaContent ||
+  embeddedImage ||
+  "";
 
       const card = document.createElement("article");
       card.className = "story";
